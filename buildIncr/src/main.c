@@ -21,7 +21,7 @@
 
 */
 
-#define DEBUG
+// #define DEBUG
 
 // Dynamics
 FILE* fptr = NULL;
@@ -47,19 +47,26 @@ void	 clearBuffers();
 static const char strConst[] = "#define BUILD ";
 char tempArray[size];
 
+static const char constfilePath[] = "E:\\GIT_REPO\\version\\version.h";
+
 int main(int argc, char** argv)
 {	
 	bool getValue = false;
 	filePath = argv[1];	
 	uint32_t fsz, fcntr = 0;
-
+        
+#ifdef DEBUG
+        filePath = realloc(filePath, sizeof(char) * 256);
+        strcpy(filePath, &constfilePath[0]);
+#endif
+        
         // if the is no filepath enterence return
 	if (!filePath) {
 		printf("no filepath\n");
                 printf("USAGE >>  X\\:build_ncr.exe FILEPATH  \n");
 		exit(0);
 	}               
-        
+       
 	uint32_t pathLength = getcharacterCount(filePath);
 
 	// dosya adresi kopyalan�p yeni dosya bu adrese yazd�r�lacak!!!!
@@ -73,7 +80,7 @@ int main(int argc, char** argv)
 	strcpy(filePathNext, filePath);
 
 	// concatenate the file path
-	strcat(filePath, "\\version.h");
+	//strcat(filePath, "\\version.h");
 
 	// open the file in read write mode	
 	fptr = fopen(filePath, "r");
@@ -96,12 +103,14 @@ int main(int argc, char** argv)
 	}
 		
 	// copy the file into the buffer:
-	uint32_t retVal = 0;
-	retVal = fread(fileContent, 1, fsz, fptr);
+	uint32_t charCount = 0;
+	//retVal = fread(fileContent, 1, fsz, fptr);
+        charCount = copyFileIntoBuffer(fptr,fileContent);
 
 	// then search the array in order to find the check point
 	uint32_t spottedIndex = 0;
-	bool result = SearchInArray(fileContent, fsz, &strConst[0], size,&spottedIndex);
+	// bool result = SearchInArray(fileContent, fsz, &strConst[0], size,&spottedIndex);  removed
+        bool result = SearchInArray(fileContent, charCount, &strConst[0], size,&spottedIndex);
 
 	// if nothing if spotted
 	if (!result){
@@ -137,7 +146,7 @@ int main(int argc, char** argv)
 	// So far everything is ok write the data into new file
 	
 	// concatenate the file path
-	 strcat(filePathNext, "\\versiontemp.h");
+	 strcat(filePathNext, "__");
 
 	ftempptr = fopen(filePathNext, "w");
 	if (!ftempptr) {
@@ -145,7 +154,8 @@ int main(int argc, char** argv)
 		clearBuffers();
 		exit(0);
 	}
-	fwrite(fileContent, sizeof(char), fsz, ftempptr);
+//	fwrite(fileContent, sizeof(char), fsz, ftempptr);   removed
+        fwrite(fileContent, sizeof(char), charCount, ftempptr);        
 
 	//close the both files
 	fclose(fptr);
@@ -167,7 +177,16 @@ int main(int argc, char** argv)
 
 	return 0;
 }
-
+uint32_t copyFileIntoBuffer(FILE* ptr,char* buffer){    
+    	uint32_t i=0;
+	char ch = 0;
+	while ((ch = fgetc(ptr)) != EOF) {
+		*(buffer+i) = ch;
+                i+=1;
+	}
+        *(buffer+i) = '\0';
+    return i;
+}
 void clearBuffers() {
 	static bool alreadyDone = false;
 
