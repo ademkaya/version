@@ -4,21 +4,15 @@
 
 // TEST DENEME 
 
-#define MAJOR 0
+#define MAJOR 1
 #define MINOR 0
 #define RELEASE 0
-#define BUILD 1567953
+#define BUILD 1568136
+
+#define LASTBUILD Sat May 09 14:28:47 2020
 
 
-
-
-
-
-
-
-
-
-
+//first filled up copy of the file is required otherwise corrupts the file, reason is known...
 
 
 
