@@ -21,7 +21,7 @@
 
 */
 
-// #define DEBUG
+ #define DEBUG
 
 // Dynamics
 FILE* fptr = NULL;
@@ -32,6 +32,7 @@ static char* filePathNext = NULL;
 static char* filePath = NULL;
 
 // func prototypes
+uint32_t copyFileIntoBuffer(FILE* ptr,char* buffer);
 void	 arrayShiftLeft(char* StartPoint, uint16_t arraySize, uint16_t shiftAmount);
 bool	 StrComp(const char* ptr1,const char* ptr2, int length);
 bool	 SearchInArray(char* bigger, int bLength, const char* smaller, int sLength, uint32_t* spotPoint);
@@ -44,13 +45,21 @@ void	 editArray(char* oldArray, uint32_t startPoint, char* newArray, uint32_t ne
 void	 clearBuffers();
 
 #define  size 14
-static const char strConst[] = "#define BUILD ";
+static const char  strMAJORConst[] = "#define MAJOR ";
+static const char  strMINORConst[] = "#define MINOR ";
+static const char  strRELEASEConst[] = "#define RELEASE ";
+static const char  strBUILDConst[] = "#define BUILD ";
+static const char* constPtrArray[]= {&strMAJORConst[0],&strMINORConst[0],&strRELEASEConst[0],&strBUILDConst[0]};
+static uint32_t*   versionValues[4]={0,0,0,0};
+
+
 char tempArray[size];
 
 static const char constfilePath[] = "E:\\GIT_REPO\\version\\version.h";
 
 int main(int argc, char** argv)
 {	
+
 	bool getValue = false;
 	filePath = argv[1];	
 	uint32_t fsz, fcntr = 0;
@@ -107,10 +116,14 @@ int main(int argc, char** argv)
 	//retVal = fread(fileContent, 1, fsz, fptr);
         charCount = copyFileIntoBuffer(fptr,fileContent);
 
+//->>>>>>>        
+        
+        
+        
 	// then search the array in order to find the check point
 	uint32_t spottedIndex = 0;
 	// bool result = SearchInArray(fileContent, fsz, &strConst[0], size,&spottedIndex);  removed
-        bool result = SearchInArray(fileContent, charCount, &strConst[0], size,&spottedIndex);
+        bool result = SearchInArray(fileContent, charCount, &strBUILDConst[0], size,&spottedIndex);
 
 	// if nothing if spotted
 	if (!result){
@@ -124,11 +137,11 @@ int main(int argc, char** argv)
 		uint32_t nextNewLine = 0;
 		nextNewLine = FindNextNewLine(fileContent + spottedIndex);
 		uint32_t build_number = atoi(fileContent + spottedIndex + size);	// #define DEBUG_BUILD <show here>
-		printf("%d", build_number);
-
 		// increase the number 1
 		build_number += 1;
 
+                printf("%d", build_number);
+                
 		// get the decimal length of the array
 		uint32_t decimalcounts = getDecimalCounts(build_number);
 
@@ -255,7 +268,6 @@ void arrayShiftLeft(char* StartPoint, uint16_t arraySize, uint16_t shiftAmount) 
 		}
 	}
 }
-/* works for equal length */
 bool StrComp(const char* ptr1,const char* ptr2, int length) {
 	int i = 0;
 	bool retVal = true;
