@@ -24,9 +24,11 @@ LAST BUILD value is updated.
 How to use:
 
 C:\buildincr.exe [templete path]
+
 C:\buildincr.exe C:\....\version.h
 
 after the call program prints out the updated version and the time value, respectively
+
 v1.0.0.3246
 "Sat May 09 15:28:47 2020"
 
