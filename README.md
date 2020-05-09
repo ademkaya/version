@@ -21,7 +21,7 @@ the program only manipulates the BUILD and LAST BUILD Value.
 Prior to the compilation process keil calls the program and BUILD number is incremented by 1.
 LAST BUILD value is updated.
 
-How to use:
+# How to use:
 
 C:\buildincr.exe [templete path]
 
