@@ -9,19 +9,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-/*
-
-	argc (ARGument Count) is int and stores number of command-line arguments passed by the user including the name of the program. 
-	So if we pass a value to a program, value of argc would be 2 (one for argument and one for program name)
-	The value of argc should be non negative.
-
-	argv(ARGument Vector) is array of character pointers listing all the arguments.
-	If argc is greater than zero,the array elements from argv[0] to argv[argc-1] will contain pointers to strings.
-	Argv[0] is the name of the program , After that till argv[argc-1] every element is command -line arguments.
-
-*/
-
-//  #define DEBUG
 
 // Dynamics
 FILE* fptr = NULL;
@@ -62,10 +49,7 @@ static uint32_t   versionValues[4]={0,0,0,0};
 
 int main(int argc, char** argv)
 {	 
-    // buildincr.exe C:\Users\Adem\Desktop\New folder\version.h
-    
-    
-    // file path empty space fix because of argument assignment
+    // file path empty space fix 
     if (argc>2){
         filePathAllocated = true;        
         filePath = realloc(filePath, sizeof(char) * 1024);        
@@ -86,26 +70,20 @@ int main(int argc, char** argv)
         filePath = argv[1];        
     }
 
-    
-    
-    
         // if the is no filepath enterence return
 	if (!filePath) {
 		printf("no filepath\n");
                 printf("USAGE >>  X\\:build_ncr.exe FILEPATH  \n");
 		exit(EXIT_FAILURE);
 	}               
-       
-        
+               
         /*TIME*/
         currentDate=NULL;
         if (!returnCurrentTimeDate(&currentDate,true)){
             printf("Time Date error");
             exit(EXIT_FAILURE);
         }
-           
-
-        
+                   
         /*TEMP FILE PATH*/
 	uint32_t pathLength = getcharacterCount(filePath);
 	// copy the raw data
@@ -118,8 +96,6 @@ int main(int argc, char** argv)
             memset(filePathNext,0,(pathLength + 100));
         }        
 	strcpy(filePathNext, filePath);
-        
-        
         
 
 	// open the file in read write mode	
@@ -210,7 +186,6 @@ int main(int argc, char** argv)
 		clearBuffers();
 		exit(EXIT_FAILURE);
 	}
-//	fwrite(fileContent, sizeof(char), fsz, ftempptr);   removed
         fwrite(fileContent, sizeof(char), charCount, ftempptr);        
 
 	//close the both files
