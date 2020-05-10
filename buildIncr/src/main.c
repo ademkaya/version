@@ -21,11 +21,9 @@ static char* currentDate=NULL;
 
 // func prototypes
 uint32_t         copyFileIntoBuffer(FILE* ptr,char* buffer);
-void             arrayShiftLeft(char* StartPoint, uint16_t arraySize, uint16_t shiftAmount);
 bool             StrComp(const char* ptr1,const char* ptr2, int length);
 bool             SearchInArray(char* bigger, int bLength, const char* smaller, int sLength, uint32_t* spotPoint);
 uint32_t         FindNextNewLine(char* strArray);
-// void             arrClear(void* ptr, uint32_t _size);
 uint32_t         getfilecharacterCount(FILE** ifptr);
 uint32_t         getcharacterCount(char* array);
 uint32_t         getDecimalCounts(uint32_t number);
@@ -285,16 +283,7 @@ void arrayShiftRight(char* StartPoint, uint16_t arraySize, uint16_t shiftAmount)
 		*(StartPoint + 0) = 0x0000;
 	}
 }
-void arrayShiftLeft(char* StartPoint, uint16_t arraySize, uint16_t shiftAmount) {
-	uint32_t sAmount = 0;
-	uint32_t aSize = 0;
 
-	for (sAmount = 0; sAmount < shiftAmount; sAmount++) {
-		for (aSize = 0; aSize < arraySize; aSize++) {
-			*(StartPoint + aSize) = *(StartPoint + aSize + 1);
-		}
-	}
-}
 bool StrComp(const char* ptr1,const char* ptr2, int length) {
 	int i = 0;
 	bool retVal = true;
