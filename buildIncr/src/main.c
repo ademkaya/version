@@ -1,4 +1,4 @@
-
+ 
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <time.h>
@@ -126,7 +126,7 @@ int main(int argc, char** argv)
             
             // then search the array in order to find the check point
             uint32_t spottedIndex = 0;
-            bool result = SearchInArray(fileContent, charCount, constPtrArray[_i], constLength[_i],&spottedIndex);  //control edilecek
+            bool result = SearchInArray(fileContent, charCount, constPtrArray[_i], constLength[_i],&spottedIndex);
             
             // if nothing if spotted
             if (!result){
