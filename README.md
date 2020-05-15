@@ -1,8 +1,4 @@
 # version
-[![Build Status](https://travis-ci.org/ademkaya/version.svg?branch=master)](https://travis-ci.org/ademkaya/version)
-[![Coverage Status](https://img.shields.io/coveralls/ademkaya/version.svg)](https://coveralls.io/r/ademkaya/version?branch=master)
-[![Coverity Scan Build Status](https://scan.coverity.com/projects/2438/badge.svg)](https://scan.coverity.com/projects/2438)
-
 KEIL uvision IDE doesn't include a build number update system. 
 Therefore, I have written a small program to edit a templete file.
 
